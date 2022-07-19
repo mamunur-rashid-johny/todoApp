@@ -1,11 +1,11 @@
 package com.qubelex.todoapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
 import com.qubelex.todoapp.common.Constant
 import com.qubelex.todoapp.databinding.ActivityWelcomeBinding
 import com.qubelex.todoapp.ui.MainActivity
@@ -19,7 +19,7 @@ class WelcomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //hide actionbar
-        //supportActionBar?.hide()
+        supportActionBar?.hide()
 
         //start splash screen logo animation
         val fadeInAnim = AnimationUtils.loadAnimation(this,R.anim.fade_in_anim)
