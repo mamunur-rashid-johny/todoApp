@@ -3,7 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/drawable/avd_todo.xml" value="0.2065" />
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/drawable/cursor_color.xml" value="0.262" />
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/drawable/ic_add.xml" value="0.2065" />
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/drawable/ic_time.xml" value="0.262" />
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/drawable/ic_todo.xml" value="0.2065" />
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/drawable/item_bg.xml" value="0.262" />
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/drawable/item_task_bg.xml" value="0.262" />
         <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/layout/activity_main.xml" value="0.29257246376811596" />
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/layout/fragment_edit_task.xml" value="0.25" />
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/layout/fragment_task.xml" value="0.29257246376811596" />
+        <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/layout/item_task.xml" value="0.67" />
       </map>
     </option>
   </component>

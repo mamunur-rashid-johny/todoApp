@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/task_created_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:padding="10dp"
+            tools:text="17 April, 2022"/>
+
+        <EditText
+            android:id="@+id/edTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/title"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textColorHint="#A1887F"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="24sp"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/edDes"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:gravity="start"
+            android:hint="@string/start_typing"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textAlignment="gravity"
+            android:textColorHint="#8D6E63"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="16sp"
+            tools:ignore="Autofill" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/task_save_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_check"
+        app:tint="@color/white"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
