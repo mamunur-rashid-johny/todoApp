@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.qubelex.todoapp.common.Constant
 import com.qubelex.todoapp.databinding.ActivityWelcomeBinding
 import com.qubelex.todoapp.ui.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
