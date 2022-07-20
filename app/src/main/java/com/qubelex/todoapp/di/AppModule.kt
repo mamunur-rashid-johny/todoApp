@@ -1,12 +1,15 @@
 package com.qubelex.todoapp.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.qubelex.todoapp.common.Constant
 import com.qubelex.todoapp.data.NoteDatabase
+import com.qubelex.todoapp.utils.SettingsPreference
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -23,6 +26,10 @@ object AppModule {
     @Provides
     @Singleton
     fun providesNoteDao(db: NoteDatabase) = db.noteDao()
+
+    @Provides
+    @Singleton
+    fun providesSettingPref(@ApplicationContext context: Context) = SettingsPreference(context = context)
 
 
 }

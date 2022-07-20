@@ -12,6 +12,7 @@ data class Note(
     val title:String,
     val description:String,
     val isCompleted:Boolean = false,
+    val important:Boolean=false,
     val created:Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true) val id:Int = 0
 ):Parcelable{

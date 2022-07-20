@@ -38,6 +38,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all { kotlinOptions.freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"] }
 }
 
 dependencies {
