@@ -66,7 +66,7 @@
             android:textColorHint="#8D6E63"
             android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="16sp"
-            tools:ignore="Autofill" />
+            tools:ignore="Autofill,TouchTargetSizeCheck" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -76,7 +76,6 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
         android:src="@drawable/ic_check"
-        app:tint="@color/white"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -16,6 +16,20 @@
         <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/layout/fragment_task.xml" value="0.29257246376811596" />
         <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/layout/item_task.xml" value="0.5" />
         <entry key="..\:/Users/Fleet/Documents/JetpackComposeOne/TodoApp/app/src/main/res/menu/task_fragment_menu.xml" value="0.3625" />
+        <entry key="app/src/main/res/drawable/ic_add.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/ic_check.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/ic_fav.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/ic_fav_fill.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/ic_filter_list.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/ic_time.xml" value="0.2035" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_add_edit_task.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_task.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/item_note.xml" value="0.3546875" />
+        <entry key="app/src/main/res/layout/item_task.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/item_task_one.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/item_test.xml" value="0.3546875" />
       </map>
     </option>
   </component>

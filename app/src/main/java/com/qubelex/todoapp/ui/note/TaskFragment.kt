@@ -6,8 +6,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.OvershootInterpolator
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat.animate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -69,17 +71,16 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
             }
         }
 
-        setFragmentResultListener("add_edit_note_result"){_,bundle->
+        setFragmentResultListener("add_edit_note_result") { _, bundle ->
             val result = bundle.getInt("add_edit_note_result")
             viewModel.onAddEditResult(result)
 
         }
 
-        viewModel.tasks.observe(viewLifecycleOwner){
-            Log.e("TAG", "onViewCreated:$it " )
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            Log.e("TAG", "onViewCreated:$it ")
             noteAdapter.submitList(it)
         }
-
 
 
 //        //inflate menu
@@ -90,9 +91,9 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
                 val searchItem = menu.findItem(R.id.search_action)
                 searchView = searchItem.actionView as SearchView
                 val pendingQuery = viewModel.searchQuery.value
-                if (pendingQuery !=null && pendingQuery.isNotEmpty()){
+                if (pendingQuery != null && pendingQuery.isNotEmpty()) {
                     searchItem.expandActionView()
-                    searchView.setQuery(pendingQuery,false)
+                    searchView.setQuery(pendingQuery, false)
                 }
                 searchView.onQueryTextChanged {
                     viewModel.searchQuery.value = it
@@ -100,7 +101,8 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
 
                 //fetch save setting and apply to menu
                 viewLifecycleOwner.lifecycleScope.launch {
-                    menu.findItem(R.id.hide_completed_tasks).isChecked = viewModel.settingFlow.first().hideCompleted
+                    menu.findItem(R.id.hide_completed_tasks).isChecked =
+                        viewModel.settingFlow.first().hideCompleted
                 }
 
             }
@@ -127,7 +129,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
                     else -> false
                 }
             }
-        },this.viewLifecycleOwner)
+        }, this.viewLifecycleOwner)
 
         //for receive event from viewModel
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -140,12 +142,18 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
                             }.show()
                     }
                     is NoteViewModel.NoteEvent.NavigateAddNoteScreen -> {
-                        val action = TaskFragmentDirections.actionTaskFragmentToAddEditFragment(note = null, title = "New Note")
+                        val action = TaskFragmentDirections.actionTaskFragmentToAddEditFragment(
+                            note = null,
+                            title = "New Note"
+                        )
                         findNavController().navigate(action)
                     }
                     is NoteViewModel.NoteEvent.NavigateToEditScreen -> {
                         val action =
-                            TaskFragmentDirections.actionTaskFragmentToAddEditFragment(note = event.note, title = "Edit Note")
+                            TaskFragmentDirections.actionTaskFragmentToAddEditFragment(
+                                note = event.note,
+                                title = "Edit Note"
+                            )
                         findNavController().navigate(action)
                     }
                     is NoteViewModel.NoteEvent.ShowConMsg -> {
