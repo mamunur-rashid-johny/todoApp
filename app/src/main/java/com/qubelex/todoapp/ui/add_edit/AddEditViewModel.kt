@@ -50,7 +50,7 @@ class AddEditViewModel @Inject constructor(
                 note.copy(title = taskTitle, description = taskDes, important = taskImportance)
             updateNote(updatedNote)
         } else {
-            val note = Note(taskTitle, taskDes, taskImportance)
+            val note = Note(title = taskTitle, description = taskDes, important = taskImportance,)
             createNote(note)
         }
 

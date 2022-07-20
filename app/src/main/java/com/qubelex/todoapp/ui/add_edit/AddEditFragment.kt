@@ -49,7 +49,7 @@ class AddEditFragment:Fragment(R.layout.fragment_add_edit_task) {
 
             noteImportance.setOnClickListener {
                 viewModel.taskImportance = !viewModel.taskImportance
-                noteImportance.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.anim_fav))
+              //  noteImportance.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.anim_fav))
                 if (viewModel.taskImportance){
                     noteImportance.load(R.drawable.ic_fav_fill)
                 }else{
