@@ -10,8 +10,8 @@ import java.text.DateFormat
 @Parcelize
 data class Note(
     val title:String,
-    val description:String,
-    val isCompleted:Boolean = false,
+    val description:String?=null,
+    val completed:Boolean = false,
     val important:Boolean=false,
     val created:Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true) val id:Int = 0

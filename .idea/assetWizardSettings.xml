@@ -28,9 +28,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_filter_list" />
-                            <entry key="sourceFile" value="C:\Users\Fleet\Desktop\todo.svg" />
+                            <entry key="outputName" value="ic_fav_fill" />
+                            <entry key="sourceFile" value="C:\Users\Fleet\Desktop\fav_fill.svg" />
                           </map>
                         </option>
                       </PersistentState>

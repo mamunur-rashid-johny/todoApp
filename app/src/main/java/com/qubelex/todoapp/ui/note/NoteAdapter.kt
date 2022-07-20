@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.qubelex.todoapp.R
 import com.qubelex.todoapp.data.Note
 import com.qubelex.todoapp.databinding.ItemTaskBinding
 
@@ -46,8 +48,13 @@ class NoteAdapter(private val onNoteItemClick: OnNoteItemClick) : ListAdapter<No
         fun bind(note: Note) {
             binding.apply {
                 taskTitle.text = note.title
-                taskCheckBox.isChecked = note.isCompleted
-                taskTitle.paint.isStrikeThruText = note.isCompleted
+                taskCheckBox.isChecked = note.completed
+                taskTitle.paint.isStrikeThruText = note.completed
+                if (note.important){
+                  favImg.load(R.drawable.ic_fav_fill)
+                }else{
+                    favImg.load(R.drawable.ic_fav)
+                }
             }
         }
     }

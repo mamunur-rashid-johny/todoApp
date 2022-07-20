@@ -1,6 +1,7 @@
 package com.qubelex.todoapp.ui.note
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -8,8 +9,10 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,24 +21,19 @@ import com.qubelex.todoapp.R
 import com.qubelex.todoapp.data.Note
 import com.qubelex.todoapp.databinding.FragmentTaskBinding
 import com.qubelex.todoapp.utils.SortOrder
+import com.qubelex.todoapp.utils.exhaustive
 import com.qubelex.todoapp.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TaskFragment : Fragment(R.layout.fragment_task),NoteAdapter.OnNoteItemClick {
+class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemClick {
     private val viewModel: NoteViewModel by viewModels()
-
+    private lateinit var searchView: SearchView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentTaskBinding.bind(view)
-
-        val data = listOf<Note>(
-            Note("Dummy title to show some text.", "2", false),
-            Note("Dummy title to some text.", "3", false)
-        )
 
         val noteAdapter = NoteAdapter(this)
 
@@ -46,12 +44,17 @@ class TaskFragment : Fragment(R.layout.fragment_task),NoteAdapter.OnNoteItemClic
                 setHasFixedSize(true)
 
                 //for swipe to delete purpose
-                ItemTouchHelper(object :ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+                ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+                    0,
+                    ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                ) {
                     override fun onMove(
                         recyclerView: RecyclerView,
                         viewHolder: RecyclerView.ViewHolder,
                         target: RecyclerView.ViewHolder
-                    ): Boolean { return false }
+                    ): Boolean {
+                        return false
+                    }
 
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                         val note = noteAdapter.currentList[viewHolder.adapterPosition]
@@ -60,18 +63,37 @@ class TaskFragment : Fragment(R.layout.fragment_task),NoteAdapter.OnNoteItemClic
 
                 }).attachToRecyclerView(taskRec)
             }
+
+            taskAddFab.setOnClickListener {
+                viewModel.onAddNewNote()
+            }
+        }
+
+        setFragmentResultListener("add_edit_note_result"){_,bundle->
+            val result = bundle.getInt("add_edit_note_result")
+            viewModel.onAddEditResult(result)
+
+        }
+
+        viewModel.tasks.observe(viewLifecycleOwner){
+            Log.e("TAG", "onViewCreated:$it " )
+            noteAdapter.submitList(it)
         }
 
 
 
-        noteAdapter.submitList(data)
-
-        //inflate menu
-        requireActivity().addMenuProvider(object : MenuProvider {
+//        //inflate menu
+        val menuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.task_fragment_menu, menu)
                 val searchItem = menu.findItem(R.id.search_action)
-                val searchView = searchItem.actionView as SearchView
+                searchView = searchItem.actionView as SearchView
+                val pendingQuery = viewModel.searchQuery.value
+                if (pendingQuery !=null && pendingQuery.isNotEmpty()){
+                    searchItem.expandActionView()
+                    searchView.setQuery(pendingQuery,false)
+                }
                 searchView.onQueryTextChanged {
                     viewModel.searchQuery.value = it
                 }
@@ -99,27 +121,45 @@ class TaskFragment : Fragment(R.layout.fragment_task),NoteAdapter.OnNoteItemClic
                         true
                     }
                     R.id.delete_all_completed_task -> {
-
+                        viewModel.deleteAllCompleted()
                         true
                     }
                     else -> false
                 }
             }
-        })
+        },this.viewLifecycleOwner)
 
         //for receive event from viewModel
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.noteEvent.collect{event->
-                when(event){
-                    is NoteViewModel.NoteEvent.ShowOnNoteDelete->{
-                        Snackbar.make(requireView(),"Note Deleted",Snackbar.LENGTH_LONG)
-                            .setAction("UNDO"){
+            viewModel.noteEvent.collect { event ->
+                when (event) {
+                    is NoteViewModel.NoteEvent.ShowOnNoteDelete -> {
+                        Snackbar.make(requireView(), "Note Deleted", Snackbar.LENGTH_LONG)
+                            .setAction("UNDO") {
                                 viewModel.onUndoDelete(event.note)
                             }.show()
                     }
-                }
+                    is NoteViewModel.NoteEvent.NavigateAddNoteScreen -> {
+                        val action = TaskFragmentDirections.actionTaskFragmentToAddEditFragment(note = null, title = "New Note")
+                        findNavController().navigate(action)
+                    }
+                    is NoteViewModel.NoteEvent.NavigateToEditScreen -> {
+                        val action =
+                            TaskFragmentDirections.actionTaskFragmentToAddEditFragment(note = event.note, title = "Edit Note")
+                        findNavController().navigate(action)
+                    }
+                    is NoteViewModel.NoteEvent.ShowConMsg -> {
+                        Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_LONG).show()
+                    }
+                    NoteViewModel.NoteEvent.NavigateToDeleteDialog -> {
+                        val action = TaskFragmentDirections.actionGlobalDeleteDialog()
+                        findNavController().navigate(action)
+                    }
+                }.exhaustive
             }
         }
+
+
     }
 
     override fun onItemClick(note: Note) {
@@ -127,8 +167,13 @@ class TaskFragment : Fragment(R.layout.fragment_task),NoteAdapter.OnNoteItemClic
     }
 
     override fun onItemCheck(note: Note, isCheck: Boolean) {
-        viewModel.onNoteChecked(note,isCheck)
+        viewModel.onNoteChecked(note, isCheck)
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchView.setOnQueryTextListener(null)
+    }
 
 }

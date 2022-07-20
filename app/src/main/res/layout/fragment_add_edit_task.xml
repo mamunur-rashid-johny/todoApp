@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.add_edit.AddEditFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,13 +12,31 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <TextView
-            android:id="@+id/task_created_date"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:padding="10dp"
-            tools:text="17 April, 2022"/>
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/task_created_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:textSize="18sp"
+                tools:text="17 April, 2022" />
+
+            <ImageView
+                android:id="@+id/note_importance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:contentDescription="@string/fav_note"
+                android:src="@drawable/ic_fav" />
+
+        </RelativeLayout>
+
+
 
         <EditText
             android:id="@+id/edTitle"

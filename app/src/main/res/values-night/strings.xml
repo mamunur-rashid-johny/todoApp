@@ -10,4 +10,5 @@
     <string name="sort_by_date">Sort by date</string>
     <string name="hide_completed">Hide completed</string>
     <string name="delete_all_completed">Delete all completed</string>
+    <string name="fav_note">fav_note</string>
 </resources>
