@@ -19,5 +19,16 @@
         android:layout_margin="20dp"
         app:srcCompat="@drawable/ic_add"
         android:contentDescription="@string/add_task" />
+    <TextView
+        android:id="@+id/tv_no_data_found"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:textAlignment="gravity"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:text="@string/no_data_found"
+        android:layout_height="wrap_content"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

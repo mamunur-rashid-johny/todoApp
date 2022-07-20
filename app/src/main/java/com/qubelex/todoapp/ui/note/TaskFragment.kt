@@ -10,6 +10,7 @@ import android.view.animation.OvershootInterpolator
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat.animate
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -78,7 +79,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
         }
 
         viewModel.tasks.observe(viewLifecycleOwner) {
-            Log.e("TAG", "onViewCreated:$it ")
+            binding.tvNoDataFound.isVisible = it.isEmpty()
             noteAdapter.submitList(it)
         }
 
