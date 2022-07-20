@@ -1,4 +1,4 @@
-package com.qubelex.todoapp.ui.tasks
+package com.qubelex.todoapp.ui.note
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

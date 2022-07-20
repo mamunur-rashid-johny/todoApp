@@ -1,4 +1,4 @@
-package com.qubelex.todoapp.ui.tasks
+package com.qubelex.todoapp.ui.note
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -9,9 +9,11 @@ import com.qubelex.todoapp.utils.SettingsPreference
 import com.qubelex.todoapp.utils.SortOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +25,8 @@ class NoteViewModel @Inject constructor(
 
     val searchQuery = MutableStateFlow("")
     val settingFlow = settingsPreference.settingsFlow
+    private val noteEventChannel = Channel<NoteEvent>()
+    val noteEvent = noteEventChannel.receiveAsFlow()
 
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -52,8 +56,38 @@ class NoteViewModel @Inject constructor(
         }
     }
 
-    fun onNoteSelected(note: Note){}
-    fun onNoteChecked(note: Note,isChecked:Boolean){}
+    //other functionality
+    fun onNoteSelected(note: Note){
+        viewModelScope.launch {
 
+        }
+    }
+
+    fun onNoteChecked(note: Note,isChecked:Boolean){
+        viewModelScope.launch {
+            dao.update(note.copy(isCompleted = isChecked))
+        }
+    }
+
+    fun onSwipeNote(note: Note){
+        viewModelScope.launch {
+            dao.delete(note)
+            noteEventChannel.send(NoteEvent.ShowOnNoteDelete(note))
+        }
+    }
+
+    fun onUndoDelete(note: Note){
+        viewModelScope.launch {
+            dao.insert(note)
+        }
+    }
+
+
+
+
+    //class for event handling
+    sealed class NoteEvent{
+        data class ShowOnNoteDelete(val note:Note):NoteEvent()
+    }
 
 }
