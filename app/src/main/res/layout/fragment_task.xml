@@ -24,10 +24,10 @@
         android:layout_width="wrap_content"
         android:gravity="center"
         android:textAlignment="gravity"
-        android:textStyle="bold"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:visibility="gone"
         android:layout_gravity="center"
+        tools:visibility="visible"
         android:text="@string/no_data_found"
         android:layout_height="wrap_content"/>
 

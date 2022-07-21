@@ -3,6 +3,7 @@ package com.qubelex.todoapp.data
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.qubelex.todoapp.common.Constant
 import kotlinx.parcelize.Parcelize
 import java.text.DateFormat
 
@@ -17,5 +18,6 @@ data class Note(
     @PrimaryKey(autoGenerate = true) val id:Int = 0
 ):Parcelable{
     val formattedDate:String
-        get() = DateFormat.getDateTimeInstance().format(created)
+        get() = Constant.stringDate(created)
+      //  get() = DateFormat.getDateTimeInstance().format(created)
 }

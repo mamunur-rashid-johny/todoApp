@@ -52,9 +52,8 @@ class NoteAdapter(private val onNoteItemClick: OnNoteItemClick) : ListAdapter<No
                 taskTitle.paint.isStrikeThruText = note.completed
                 if (note.important){
                   favImg.load(R.drawable.ic_fav_fill)
-                }else{
-                    favImg.load(R.drawable.ic_fav)
                 }
+
             }
         }
     }

@@ -8,6 +8,7 @@ import com.qubelex.todoapp.ui.EDIT_NOTE
 import com.qubelex.todoapp.utils.SettingsPreference
 import com.qubelex.todoapp.utils.SortOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -28,6 +29,7 @@ class NoteViewModel @Inject constructor(
     private val noteEventChannel = Channel<NoteEvent>()
     val noteEvent = noteEventChannel.receiveAsFlow()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val tasksFlow = combine(
         searchQuery.asFlow(),
         settingFlow
