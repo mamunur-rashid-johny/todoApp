@@ -81,5 +81,8 @@ dependencies {
     implementation("io.coil-kt:coil:2.1.0")
 
 
+    //library for unit test,ui test
+    testImplementation "com.google.truth:truth:1.1.2"
+    androidTestImplementation "com.google.truth:truth:1.1.2"
 
 }

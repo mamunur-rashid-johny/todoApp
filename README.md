@@ -1,6 +1,5 @@
 # todoApp
-### todo app to track daily life task.</br>
-
+### todo app to track daily life task. user can manipulate different operation from menu section.</br>
 ![](https://github.com/mamunur-rashid-johny/todoApp/blob/main/assets/app_one.gif)
 
 # app ui preview
@@ -19,4 +18,7 @@
 
 ### perform search action on notes
 ![](https://github.com/mamunur-rashid-johny/todoApp/blob/main/assets/search.jpg)
+
+
+
 
