@@ -6,7 +6,7 @@
 # app ui preview
 
 ### Splash Screen
-<img src="https://github.com/mamunur-rashid-johny/todoApp/blob/main/assets/spashscreen.jpg" width="200" height="400">
+<img src="https://github.com/mamunur-rashid-johny/todoApp/blob/main/assets/spashscreen.jpg" width="50%" height="50%">
 
 
 ### Note UI, where list of note or task shoes.
