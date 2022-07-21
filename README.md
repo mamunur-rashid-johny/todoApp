@@ -1,2 +1,2 @@
 # todoApp
-Simple app to track daily life task.
+todo app to track daily life task.
