@@ -96,10 +96,10 @@ class NoteViewModel @Inject constructor(
     fun onAddEditResult(result: Int) {
         when (result) {
             ADD_NOTE -> {
-                showMessage("Note added")
+                showMessage("New note added")
             }
             EDIT_NOTE -> {
-                showMessage("Note update")
+                showMessage("Note updated")
             }
         }
     }
