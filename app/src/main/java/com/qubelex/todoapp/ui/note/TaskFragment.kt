@@ -1,15 +1,17 @@
 package com.qubelex.todoapp.ui.note
 
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Rect
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.OvershootInterpolator
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
-import androidx.core.view.ViewCompat.animate
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -29,6 +31,7 @@ import com.qubelex.todoapp.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemClick {
@@ -39,6 +42,9 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
         val binding = FragmentTaskBinding.bind(view)
 
         val noteAdapter = NoteAdapter(this)
+        //delete icon
+        val deleteIcon = requireContext().getDrawable(R.drawable.ic_delete)
+
 
         binding.apply {
             taskRec.apply {
@@ -62,6 +68,84 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                         val note = noteAdapter.currentList[viewHolder.adapterPosition]
                         viewModel.onSwipeNote(note)
+                    }
+
+                    override fun onChildDraw(
+                        c: Canvas,
+                        recyclerView: RecyclerView,
+                        viewHolder: RecyclerView.ViewHolder,
+                        dX: Float,
+                        dY: Float,
+                        actionState: Int,
+                        isCurrentlyActive: Boolean
+                    ) {
+                        val textMargin = resources.getDimension(R.dimen.text_margin)
+                            .roundToInt()
+                        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                            if (dX > 0) {
+                                //icon placement for left swipe
+                                deleteIcon?.bounds = Rect(
+                                    textMargin,
+                                    viewHolder.itemView.top + textMargin,
+                                    textMargin + deleteIcon!!.intrinsicWidth,
+                                    viewHolder.itemView.top + deleteIcon.intrinsicHeight
+                                            + textMargin
+                                )
+                                //Positive or from left
+                                c.clipRect(
+                                    viewHolder.itemView.left.toFloat(),
+                                    viewHolder.itemView.top.toFloat(), dX,
+                                    viewHolder.itemView.bottom.toFloat(),
+                                )
+                                if (dX < width / 3) {
+                                    c.drawColor(Color.GRAY)
+                                } else {
+                                    c.drawColor(Color.RED)
+                                }
+
+                                //draw icon
+                                deleteIcon.draw(c)
+
+                            } else {
+                                //icon placement for right swipe
+                                deleteIcon?.bounds = Rect(
+                                   1040,
+                                    viewHolder.itemView.top + textMargin,
+                                    textMargin,
+                                    viewHolder.itemView.top + deleteIcon!!.intrinsicHeight
+                                            + textMargin
+                                )
+                                //Negative or from right
+                                c.clipRect(
+                                    viewHolder.itemView.right.toFloat() + dX,
+                                    viewHolder.itemView.top.toFloat(),
+                                    viewHolder.itemView.right.toFloat(),
+                                    viewHolder.itemView.bottom.toFloat()
+                                )
+                                if (dX > -(width) / 3) {
+                                    c.drawColor(Color.GRAY)
+                                } else {
+                                    c.drawColor(Color.RED)
+                                }
+                                //draw icon
+                                //deleteIcon?.draw(c)
+                            }
+                            Log.e("dX: ","$dX" )
+                            Log.e("TAG", "wide:$width " )
+                            Log.e("TAG", "value:${viewHolder.itemView.right.toFloat() + dX} " )
+                            Log.e("TAG", "value:${textMargin + deleteIcon!!.intrinsicWidth} " )
+
+                        }
+                        super.onChildDraw(
+                            c,
+                            recyclerView,
+                            viewHolder,
+                            dX,
+                            dY,
+                            actionState,
+                            isCurrentlyActive
+                        )
+
                     }
 
                 }).attachToRecyclerView(taskRec)
@@ -184,5 +268,8 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
         super.onDestroyView()
         searchView.setOnQueryTextListener(null)
     }
+
+    private fun convertDpToPx(dp: Int): Int =
+        (dp * resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT).roundToInt()
 
 }
