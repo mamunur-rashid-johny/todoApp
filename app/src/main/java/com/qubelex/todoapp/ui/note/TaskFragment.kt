@@ -109,10 +109,10 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
                             } else {
                                 //icon placement for right swipe
                                 deleteIcon?.bounds = Rect(
-                                   1040,
+                                   viewHolder.itemView.right - textMargin - deleteIcon!!.intrinsicWidth,
                                     viewHolder.itemView.top + textMargin,
-                                    textMargin,
-                                    viewHolder.itemView.top + deleteIcon!!.intrinsicHeight
+                                    viewHolder.itemView.right - textMargin,
+                                    viewHolder.itemView.top + deleteIcon.intrinsicHeight
                                             + textMargin
                                 )
                                 //Negative or from right
@@ -128,13 +128,8 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
                                     c.drawColor(Color.RED)
                                 }
                                 //draw icon
-                                //deleteIcon?.draw(c)
+                                deleteIcon.draw(c)
                             }
-                            Log.e("dX: ","$dX" )
-                            Log.e("TAG", "wide:$width " )
-                            Log.e("TAG", "value:${viewHolder.itemView.right.toFloat() + dX} " )
-                            Log.e("TAG", "value:${textMargin + deleteIcon!!.intrinsicWidth} " )
-
                         }
                         super.onChildDraw(
                             c,
