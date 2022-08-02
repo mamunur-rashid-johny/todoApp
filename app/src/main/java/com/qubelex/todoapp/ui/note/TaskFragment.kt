@@ -4,8 +4,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -264,7 +262,5 @@ class TaskFragment : Fragment(R.layout.fragment_task), NoteAdapter.OnNoteItemCli
         searchView.setOnQueryTextListener(null)
     }
 
-    private fun convertDpToPx(dp: Int): Int =
-        (dp * resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT).roundToInt()
 
 }
